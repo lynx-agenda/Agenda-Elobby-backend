@@ -1,0 +1,27 @@
+{
+  "name": "agenda-elobby-backend",
+  "version": "1.0.0",
+  "description": "\"Backend for project bootcam\"",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.13",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Winki-hub/Agenda-Elobby-backend.git"
+  },
+  "author": "Fran, Alejandro, Marcos, Lorenzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Winki-hub/Agenda-Elobby-backend/issues"
+  },
+  "homepage": "https://github.com/Winki-hub/Agenda-Elobby-backend#readme"
+}
