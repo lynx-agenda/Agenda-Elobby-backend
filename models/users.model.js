@@ -28,7 +28,7 @@ const schema = new mongoose.Schema(
       required: true,
       type: String,
       minlength: 3,
-      maxlength: 24,
+      maxlength: 255,
     },
     diary: {
       default: null,

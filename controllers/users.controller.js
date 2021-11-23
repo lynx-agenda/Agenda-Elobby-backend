@@ -1,5 +1,6 @@
-const model = require("../models/users.model");
-
+const USERmodel = require("../models/users.model");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 /**
  *     GET :    /users            getALL
  *     GET :    /users/:email     getUser
@@ -9,7 +10,67 @@ const model = require("../models/users.model");
  *
  */
 
-module.exports = { getAll, getUser, createUser, removeUser, modifyUser };
+module.exports = {
+  getAll,
+  getUser,
+  createUser,
+  removeUser,
+  modifyUser,
+  signUp,
+};
+
+function signUp(req, res) {
+  const user = new USERmodel();
+
+  const { name, username, email, password, repeatPassword } = req.body;
+  user.name = name;
+  user.username = username;
+  user.email = email.toLowerCase();
+
+  if (!password || !repeatPassword) {
+    res.status(404).send({ message: "Las contraseñas son obligatorias" });
+  } else {
+    if (password !== repeatPassword) {
+      res
+        .status(404)
+        .send({ message: "Las contraseñas tienen que ser iguales." });
+    } else {
+      bcrypt.genSalt(10, function (err, salt) {
+        console.log("1");
+        bcrypt.hash(password, salt, function (err, hash) {
+          console.log("2");
+          if (err) {
+            res
+              .status(500)
+              .send({ message: "Error al encriptar la contraseña" });
+          } else {
+            user.password = hash;
+
+            user.save((err, userStored) => {
+              if (err) {
+                console.log(err);
+                res
+                  .status(500)
+                  .send({ message: "Error al crear el usuario: " + err });
+              } else {
+                if (!userStored) {
+                  res
+                    .status(404)
+                    .send({ message: "No se ha podido crear el usuario." });
+                } else {
+                  console.log("3");
+                  res.status(200).send({ user: userStored });
+                }
+              }
+            });
+          }
+        });
+      });
+    }
+  }
+
+  const {} = req.body;
+}
 
 function getAll(req, res) {
   return USERmodel.find()
