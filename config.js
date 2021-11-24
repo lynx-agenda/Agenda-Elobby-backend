@@ -1,14 +1,10 @@
-const API_VERSION = "v1";
-const BD_USERNAME = "bootcam-lynx";
-const BD_PASSWORD = "adf782_A";
-const IP_SERVER = "localhost";
-const BD_NAME = "myFirstDatabase";
-const PORT_DB = 27017;
+const dotenv = require("dotenv").config({path: '.env'});
+
 module.exports = {
-  API_VERSION,
-  IP_SERVER,
-  PORT_DB,
-  BD_USERNAME,
-  BD_PASSWORD,
-  BD_NAME,
+  API_VERSION: process.env.API_VERSION || "v1",
+  HOST: process.env.HOST || "127.0.0.1",
+  PORT: process.env.PORT || 3000,
+  DB_USERNAME: process.env.DB_USERNAME || "homer",
+  DB_PASSWORD: process.env.DB_PASSWORD || "password",
+  DB_NAME: process.env.DB_NAME || "myMongoDB",
 };

@@ -1,15 +1,19 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const cors = require('cors');
+const mongoose = require("mongoose");
+const config = require('./config');
 
 const app = express();
-const { API_VERSION } = require("./config");
+
+mongoose.connect(`mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@cluster.ralzs.mongodb.net/${config.DB_NAME}?retryWrites=true&w=majority`);
 
 //Load routings
-const usersRouter = require("./routers/users.router");
+const usersRouter = require("./api/routers/users.router");
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.json());
+app.use(cors())
+
+app.use(express.json()); // middleware used to parse JSON bodies
+// app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
 
 //Configure Header HTTP
 app.use((req, res, next) => {
@@ -23,9 +27,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// // Routers Basic
-app.use("/users", usersRouter);
+// Routers Basic
+app.use("/api/users", usersRouter);
 
 // app.use(`/api/${API_VERSION}`, authRoutes);
 
-module.exports = app;
+app.listen(config.PORT, (err) => {
+  if (err) {
+    throw err;
+  } else {
+    console.log("###############");
+    console.log("### API REST ##");
+    console.log("###############");
+    console.log(`http://${config.HOST}:${config.PORT}/api/`);
+    };
+  }
+);
