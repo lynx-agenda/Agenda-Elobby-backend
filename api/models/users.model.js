@@ -39,7 +39,7 @@ const schema = new mongoose.Schema(
 );
 
 // 3.
-// todo => nombre del recurso que podemos guardar en la bd
+// user => nombre del recurso que podemos guardar en la bd
 const USERmodel = mongoose.model("user", schema);
 
 // 4. Exportamos el modelo
