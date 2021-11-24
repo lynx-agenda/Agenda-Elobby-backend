@@ -7,4 +7,5 @@ module.exports = {
   DB_USERNAME: process.env.DB_USERNAME || "homer",
   DB_PASSWORD: process.env.DB_PASSWORD || "password",
   DB_NAME: process.env.DB_NAME || "myMongoDB",
+  SECRET_KEY: process.env.SECRET || "MyLittlePony",
 };
