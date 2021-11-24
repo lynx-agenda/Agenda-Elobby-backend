@@ -6,6 +6,5 @@ router.post("", controller.createUser); //=> coger un user
 router.delete("/:id", controller.removeUser); //=> borrar un user por id
 router.patch("/:id", controller.modifyUser); //=> parchear un user por id
 router.get("/:email", controller.getUser); //=> coger un usuario por id
-router.post("/sign-up", controller.signUp); // => Registro usuario
 
 module.exports = router;
