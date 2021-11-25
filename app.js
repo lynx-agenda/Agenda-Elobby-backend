@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require('./config');
 
@@ -7,13 +7,16 @@ const { authenticateToken } = require('./src/middlewares/auth.middleware');
 
 const app = express();
 
-mongoose.connect(`mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@cluster.ralzs.mongodb.net/${config.DB_NAME}?retryWrites=true&w=majority`);
+mongoose.connect(
+  `mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@cluster.ralzs.mongodb.net/${config.DB_NAME}?retryWrites=true&w=majority`
+);
 
 //Load routings
 const usersRouter = require("./src/api/routers/users.router");
 const authRouter = require("./src/api/routers/auth.router");
+const reviewsRouter = require("/src./api/routers/reviews.router");
 
-app.use(cors())
+app.use(cors());
 
 app.use(express.json()); // middleware used to parse JSON bodies
 // app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
@@ -36,6 +39,8 @@ app.use((req, res, next) => {
 
 // Routers Basic
 app.use("/api/users", usersRouter);
+app.use("/auth", authRouter);
+app.use("/api/reviews", reviewsRouter);
 
 // app.use(`/api/${API_VERSION}`, authRoutes);
 
@@ -47,6 +52,5 @@ app.listen(config.PORT, (err) => {
     console.log("### API REST ##");
     console.log("###############");
     console.log(`http://${config.HOST}:${config.PORT}/api/`);
-    };
   }
-);
+});
