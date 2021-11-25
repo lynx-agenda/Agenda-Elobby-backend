@@ -1,4 +1,5 @@
 const USERmodel = require("../models/users.model");
+
 /**
  *     GET :    /users            getALL
  *     GET :    /users/:email     getUser

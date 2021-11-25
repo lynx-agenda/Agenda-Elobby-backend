@@ -2,7 +2,7 @@
   "name": "agenda-elobby-backend",
   "version": "1.0.0",
   "description": "\"Backend for project bootcam\"",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
