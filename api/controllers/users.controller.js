@@ -18,6 +18,11 @@ module.exports = {
 
 function getAll(req, res) {
   return USERmodel.find()
+    .populate("reviews", {
+      text: 1,
+      note: 1,
+      _id: 0,
+    })
     .then((results) => {
       return res.json(results);
     })
