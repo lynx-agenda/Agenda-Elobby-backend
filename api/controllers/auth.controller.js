@@ -4,17 +4,17 @@ const USERmodel = require("../models/users.model");
 const config = require("../../config");
 
 module.exports = {
-	signUp,
-	signIn,
+  signUp,
+  signIn,
 };
 
 async function signUp(req, res) {
 	const user = new USERmodel();
 
-	const { name, username, email, password, repeatPassword } = req.body;
-	user.name = name;
-	user.username = username;
-	user.email = email.toLowerCase();
+  const { name, username, email, password, repeatPassword } = req.body;
+  user.name = name;
+  user.username = username;
+  user.email = email.toLowerCase();
 
 	// Validación: nos llega password y repeatPassword
 	if (!password || !repeatPassword) {

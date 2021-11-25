@@ -1,8 +1,10 @@
 // 1. Importamos mongoose
 const mongoose = require("mongoose");
 
+//var review = mongoose.model("review");
+
 // 2. Aquí definimos el esquema de un todo
-const schema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       required: true,
@@ -33,14 +35,21 @@ const schema = new mongoose.Schema(
     diary: {
       default: null,
       type: mongoose.Schema.Types.ObjectId,
+      ref: "diary",
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "review",
+      },
+    ],
   },
   { timestamps: true }
 );
 
 // 3.
 // user => nombre del recurso que podemos guardar en la bd
-const USERmodel = mongoose.model("user", schema);
+const USERmodel = mongoose.model("user", userSchema);
 
 // 4. Exportamos el modelo
 module.exports = USERmodel;
