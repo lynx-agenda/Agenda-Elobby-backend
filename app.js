@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const compression = require("compression");
 const config = require('./config');
 
 const { authenticateToken } = require('./src/middlewares/auth.middleware');
 
+// Create the Express application object
 const app = express();
 
 mongoose.connect(
@@ -14,8 +16,9 @@ mongoose.connect(
 //Load routings
 const usersRouter = require("./src/api/routers/users.router");
 const authRouter = require("./src/api/routers/auth.router");
-const reviewsRouter = require("/src./api/routers/reviews.router");
+const reviewsRouter = require("./src/api/routers/reviews.router");
 
+app.use(compression()); //Compress all routes
 app.use(cors());
 
 app.use(express.json()); // middleware used to parse JSON bodies
