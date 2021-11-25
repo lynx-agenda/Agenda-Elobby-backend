@@ -11,11 +11,10 @@ module.exports = {
 async function signUp(req, res) {
 	const user = new USERmodel();
 
-	const { name, username, email, password, repeatPassword, cardId } = req.body;
+	const { name, username, email, password, repeatPassword } = req.body;
 	user.name = name;
 	user.username = username;
 	user.email = email.toLowerCase();
-	user.cardId = cardId;
 
 	// Validación: nos llega password y repeatPassword
 	if (!password || !repeatPassword) {
