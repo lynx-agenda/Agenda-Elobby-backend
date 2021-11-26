@@ -20,8 +20,10 @@ function authenticateToken(req, res, next) {
 		// Error 403 – Forbidden
 		if (err) return res.sendStatus(403);
 
-    // En dataStored tenemos los datos que guardamos dentro del token
-		req.user = dataStored;
+		// Cuando llegamos aquí: estamos logueados
+		// En dataStored tenemos los datos que guardamos dentro del token
+		req.locals = { dataStored };
+		console.log(req.locals)
 		next();
 	});
 }

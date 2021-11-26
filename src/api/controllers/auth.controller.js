@@ -83,7 +83,7 @@ async function signIn(req, res) {
 
 			// if passwords match => Genera el token de autenticación
 			if (result) {
-				let token = jwt.sign({ usuario: userDB.name, email: userDB.email }, config.SECRET_KEY);
+				let token = jwt.sign({ userName: userDB.name, userEmail : userDB.email, userId: userDB._id, userRole: userDB.role }, config.SECRET_KEY);
 
 				res.json({
 					success: true, 
