@@ -12,12 +12,15 @@ const USERmodel = require("../models/users.model");
 module.exports = {
   getAll,
   getUser,
-  createUser,
   removeUser,
   modifyUser,
 };
 
+/**
+ * @returns La lista de usuarios registrados en el sistema
+ */
 function getAll(req, res) {
+  
   return USERmodel.find()
     .populate("reviews", {
       text: 1,
@@ -32,8 +35,12 @@ function getAll(req, res) {
     });
 }
 
+/**
+ * @returns Un usuario registrado en el sistema con el id pasado por parámetro
+ */
 function getUser(req, res) {
-  return USERmodel.findOne({ email: req.params.email })
+
+  return USERmodel.findOne({ _id: req.params.id })
     .then((results) => {
       return res.json(results);
     })
@@ -42,17 +49,11 @@ function getUser(req, res) {
     });
 }
 
-function createUser(req, res) {
-  return USERmodel.create(req.body)
-    .then((results) => {
-      return res.status(201).json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
-}
-
+/**
+ * @returns 
+ */
 function removeUser(req, res) {
+
   return USERmodel.findByIdAndRemove(req.params.id)
     .then((results) => {
       return res.json(results);
@@ -63,6 +64,7 @@ function removeUser(req, res) {
 }
 
 function modifyUser(req, res) {
+
   return USERmodel.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((results) => {
       return res.json(results);

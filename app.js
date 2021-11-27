@@ -2,9 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const compression = require("compression");
-const config = require('./config');
+const config = require("./config");
 
-const { authenticateToken } = require('./src/middlewares/auth.middleware');
+const {
+  authenticateToken,
+  checkAuthUserValidity,
+} = require("./src/middlewares/auth.middleware");
 
 // Create the Express application object
 const app = express();
@@ -22,11 +25,11 @@ app.use(compression()); //Compress all routes
 app.use(cors());
 
 app.use(express.json()); // middleware used to parse JSON bodies
-// app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
+app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
 
-app.use('/auth', authRouter);
+app.use("/auth", authRouter);
 
-app.use(authenticateToken)
+app.use(authenticateToken);
 
 //Configure Header HTTP
 app.use((req, res, next) => {
@@ -42,8 +45,7 @@ app.use((req, res, next) => {
 
 // Routers Basic
 app.use("/api/users", usersRouter);
-app.use("/auth", authRouter);
-app.use("/api/reviews", reviewsRouter);
+app.use("/api/reviews", checkAuthUserValidity, reviewsRouter);
 
 // app.use(`/api/${API_VERSION}`, authRoutes);
 
