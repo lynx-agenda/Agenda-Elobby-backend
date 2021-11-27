@@ -54,7 +54,7 @@ async function signUp(req, res) {
 				if (!userStored) {
 					return res.status(404).send({ success: false, message: "No se ha podido crear el usuario." });
 				} else {
-					return res.status(200).send({ success: true, user: userStored });
+					return res.status(201).send({ success: true, user: userStored });
 				}
 			});
 		});
@@ -83,7 +83,7 @@ async function signIn(req, res) {
 
 			// if passwords match => Genera el token de autenticación
 			if (result) {
-				let token = jwt.sign({ usuario: userDB.name, email: userDB.email }, config.SECRET_KEY);
+				let token = jwt.sign({ userName: userDB.name, userEmail : userDB.email, userId: userDB._id, userRole: userDB.role }, config.SECRET_KEY);
 
 				res.json({
 					success: true, 
@@ -91,7 +91,7 @@ async function signIn(req, res) {
 				});
 			} else {
 				// response is OutgoingMessage object that server response http request
-				return res.json({ success: false, message: "Correo o contraseña incorrectos" });
+				return res.status(401).json({ success: false, message: "Correo o contraseña incorrectos" });
 			}
 		});
 	} catch (erro) {
