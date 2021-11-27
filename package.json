@@ -14,7 +14,8 @@
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/Winki-hub/Agenda-Elobby-backend/issues"
   },
-  "homepage": "https://github.com/Winki-hub/Agenda-Elobby-backend#readme"
+  "homepage": "https://github.com/Winki-hub/Agenda-Elobby-backend#readme",
+  "engines": {
+    "node": "14.x"
+  }
 }
