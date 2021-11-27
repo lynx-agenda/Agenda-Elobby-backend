@@ -18,6 +18,15 @@ const userSchema = new mongoose.Schema(
       minlength: 5,
       maxlength: 100,
       unique: true,
+      validate: {
+        validator: function (email){
+
+          var EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+          return EMAIL_REGEX.test(email)
+        },
+        message: "El correo electrónico no tiene un formato válido"
+      }
     },
     username: {
       required: true,

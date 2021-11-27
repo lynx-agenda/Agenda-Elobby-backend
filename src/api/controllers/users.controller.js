@@ -20,11 +20,7 @@ module.exports = {
  * @returns La lista de usuarios registrados en el sistema
  */
 function getAll(req, res) {
-
-  if ( !isAdmin(req.locals.dataStored) ) {
-    return res.status(401).send("El usuario carece de credenciales válidas para la petición realizada");
-  }
-
+  
   return USERmodel.find()
     .populate("reviews", {
       text: 1,
@@ -44,11 +40,7 @@ function getAll(req, res) {
  */
 function getUser(req, res) {
 
-  if ( !checkAuthUserValidity(req.locals.dataStored) ) {
-    return res.status(401).send("El usuario carece de credenciales válidas para la petición realizada");
-  }
-
-  return USERmodel.findOne({ email: req.params.email })
+  return USERmodel.findOne({ _id: req.params.id })
     .then((results) => {
       return res.json(results);
     })
@@ -62,10 +54,6 @@ function getUser(req, res) {
  */
 function removeUser(req, res) {
 
-  if ( !checkAuthUserValidity(req.locals.dataStored) ) {
-    return res.status(401).send("El usuario carece de credenciales válidas para la petición realizada");
-  }
-
   return USERmodel.findByIdAndRemove(req.params.id)
     .then((results) => {
       return res.json(results);
@@ -77,10 +65,6 @@ function removeUser(req, res) {
 
 function modifyUser(req, res) {
 
-  if ( !checkAuthUserValidity(req.locals.dataStored) ) {
-    return res.status(401).send("El usuario carece de credenciales válidas para la petición realizada");
-  }
-
   return USERmodel.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((results) => {
       return res.json(results);
@@ -88,26 +72,4 @@ function modifyUser(req, res) {
     .catch((err) => {
       return res.status(500).json(err);
     });
-}
-
-/**
- * La función verifica que el usuario tiene permiso para realizar la 
- * request. Tendrá permiso siempre que sea userRole==="admin" o 
- * un userRole==="user" que realiza una operación sobre su misma id
- */
-function checkAuthUserValidity(dataStored) {
-  const userRole = dataStored.userRole;
-  const userId = dataStored.userId
-
-  return userRole === "user" && userId == req.params.id 
-}
-
-/**
- * La función verifica que el usuario tiene userRole==="admin"
- */
- function isAdmin(dataStored) {
-  const userRole = dataStored.userRole;
-
-  console.log(userRole);
-  return userRole === "admin"
 }
