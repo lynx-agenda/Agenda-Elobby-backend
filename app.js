@@ -20,12 +20,13 @@ mongoose.connect(
 const usersRouter = require("./src/api/routers/users.router");
 const authRouter = require("./src/api/routers/auth.router");
 const reviewsRouter = require("./src/api/routers/reviews.router");
+const thirdRouter = require("./src/api/routers/third.router");
 
 app.use(compression()); //Compress all routes
 app.use(cors());
 
 app.use(express.json()); // middleware used to parse JSON bodies
-app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
+// app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
 
 app.use("/auth", authRouter);
 
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 });
 
 // Routers Basic
+app.use("/third", thirdRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/reviews", checkAuthUserValidity, reviewsRouter);
 
