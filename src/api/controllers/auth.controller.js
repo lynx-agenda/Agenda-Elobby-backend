@@ -68,7 +68,7 @@ async function signIn(req, res) {
 	email = email.toLowerCase();
 
 	try {
-		const userDB = await USERmodel.findOne({ success: false, email: req.body.email });
+		const userDB = await USERmodel.findOne({ success: false, email: email });
 
 		// Verifica que exista un usuario con el mail escrito por el usuario.
 		if (!userDB) {
