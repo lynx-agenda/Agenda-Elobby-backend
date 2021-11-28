@@ -29,6 +29,7 @@ app.use(express.json()); // middleware used to parse JSON bodies
 // app.use(express.urlencoded()); // middleware used to parse URL-encoded bodies
 
 app.use("/auth", authRouter);
+app.use("/third", thirdRouter);
 
 app.use(authenticateToken);
 
@@ -45,7 +46,6 @@ app.use((req, res, next) => {
 });
 
 // Routers Basic
-app.use("/third", thirdRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/reviews", checkAuthUserValidity, reviewsRouter);
 
