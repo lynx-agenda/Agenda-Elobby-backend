@@ -20,13 +20,8 @@ module.exports = {
  * @returns La lista de usuarios registrados en el sistema
  */
 function getAll(req, res) {
-  
   return USERmodel.find()
-    .populate("reviews", {
-      text: 1,
-      note: 1,
-      _id: 0,
-    })
+
     .then((results) => {
       return res.json(results);
     })
@@ -39,8 +34,9 @@ function getAll(req, res) {
  * @returns Un usuario registrado en el sistema con el id pasado por parámetro
  */
 function getUser(req, res) {
-
   return USERmodel.findOne({ _id: req.params.id })
+    .populate("reviews")
+    .populate("diary")
     .then((results) => {
       return res.json(results);
     })
@@ -50,10 +46,9 @@ function getUser(req, res) {
 }
 
 /**
- * @returns 
+ * @returns
  */
 function removeUser(req, res) {
-
   return USERmodel.findByIdAndRemove(req.params.id)
     .then((results) => {
       return res.json(results);
@@ -64,7 +59,6 @@ function removeUser(req, res) {
 }
 
 function modifyUser(req, res) {
-
   return USERmodel.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((results) => {
       return res.json(results);

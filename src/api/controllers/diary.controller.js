@@ -10,64 +10,64 @@ const DIARYmodel = require("../models/diary.model");
  */
 
 module.exports = {
-  getAll,
-  getUser,
-  createUser,
-  removeUser,
-  modifyUser,
+  getAllDiaries,
+  getDiary,
+  createDiary,
+  removeDiary,
+  modifyDiary,
 };
 
 function getAllDiaries(req, res) {
-  return USERmodel.find()
-    .populate("reviews", {
-      text: 1,
-      note: 1,
-      _id: 0,
-    })
-    .then((results) => {
-      return res.json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
+  // return DIARYmodel.find()
+  //   .populate("reviews", {
+  //     text: 1,
+  //     note: 1,
+  //     _id: 0,
+  //   })
+  //   .then((results) => {
+  //     return res.json(results);
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).json(err);
+  //   });
 }
 
 function getDiary(req, res) {
-  return USERmodel.findOne({ email: req.params.email })
-    .then((results) => {
-      return res.json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
+  // return DIARYmodel.findOne({ email: req.params.email })
+  //   .then((results) => {
+  //     return res.json(results);
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).json(err);
+  //   });
 }
 
 function createDiary(req, res) {
-  return USERmodel.create(req.body)
-    .then((results) => {
-      return res.status(201).json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
+  // return DIARYmodel.create(req.body)
+  //   .then((results) => {
+  //     return res.status(201).json(results);
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).json(err);
+  //   });
 }
 
 function removeDiary(req, res) {
-  return USERmodel.findByIdAndRemove(req.params.id)
-    .then((results) => {
-      return res.json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
+  // return DIARYmodel.findByIdAndRemove(req.params.id)
+  //   .then((results) => {
+  //     return res.json(results);
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).json(err);
+  //   });
 }
 
 function modifyDiary(req, res) {
-  return USERmodel.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((results) => {
-      return res.json(results);
-    })
-    .catch((err) => {
-      return res.status(500).json(err);
-    });
+  // return DIARYmodel.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  //   .then((results) => {
+  //     return res.json(results);
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).json(err);
+  //   });
 }

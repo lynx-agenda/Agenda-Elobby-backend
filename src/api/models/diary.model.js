@@ -34,6 +34,10 @@ const diarySchema = new mongoose.Schema(
         //ref: elements,
       },
     ],
+    idUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { timestamps: true }
 );
