@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 // Routers Basic
 app.use("/api/users", usersRouter);
-app.use("/api/reviews", checkAuthUserValidity, reviewsRouter);
+app.use("/api/reviews", reviewsRouter);
 
 // app.use(`/api/${API_VERSION}`, authRoutes);
 
