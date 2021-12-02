@@ -21,6 +21,8 @@ const usersRouter = require("./src/api/routers/users.router");
 const authRouter = require("./src/api/routers/auth.router");
 const reviewsRouter = require("./src/api/routers/reviews.router");
 const thirdRouter = require("./src/api/routers/third.router");
+const diariesRouter = require("./src/api/routers/diaries.router");
+const elementsRouter = require("./src/api/routers/elements.router");
 
 app.use(compression()); //Compress all routes
 app.use(cors());
@@ -48,6 +50,8 @@ app.use((req, res, next) => {
 // Routers Basic
 app.use("/api/users", usersRouter);
 app.use("/api/reviews", reviewsRouter);
+app.use("/api/diaries", diariesRouter);
+app.use("/api/elements", elementsRouter);
 
 // app.use(`/api/${API_VERSION}`, authRoutes);
 
