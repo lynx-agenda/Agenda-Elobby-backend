@@ -38,6 +38,8 @@ function getUser(req, res) {
     .populate("reviews")
     .populate("diary")
     .then((results) => {
+      results = results.toObject(); // https://stackoverflow.com/questions/23342558/why-cant-i-delete-a-mongoose-models-object-properties
+      delete results.password;
       return res.json(results);
     })
     .catch((err) => {

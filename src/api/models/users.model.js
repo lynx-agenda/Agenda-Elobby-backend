@@ -1,8 +1,6 @@
 // 1. Importamos mongoose
 const mongoose = require("mongoose");
 
-//var review = mongoose.model("review");
-
 // 2. Aquí definimos el esquema de un todo
 const userSchema = new mongoose.Schema(
   {
