@@ -46,8 +46,7 @@ async function createElement(req, res) {
   if (!element) {
     const newElement = new ELEMENTmodel({
       idApi,
-      type,
-      idDiary: req.params.id,
+      type
     });
     const savedElement = await newElement.save();
     return res.json({ success: true, savedElement });

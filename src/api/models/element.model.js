@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // 2. Aquí definimos el esquema de un todo
 const elementSchema = new mongoose.Schema(
   {
-    idElement: {
+    idApi: {
       required: true,
       type: String,
     },
@@ -14,11 +14,7 @@ const elementSchema = new mongoose.Schema(
       required: true,
       type: String,
       enum: ["movie", "tv", "book", "game"],
-    },
-    idDiary: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "diary",
-    },
+    }
   },
   { timestamps: true }
 );
