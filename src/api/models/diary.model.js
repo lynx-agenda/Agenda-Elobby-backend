@@ -10,28 +10,28 @@ const diarySchema = new mongoose.Schema(
       {
         default: null,
         type: mongoose.Schema.Types.ObjectId,
-        //ref: elements,
+        ref: "elements",
       },
     ],
     completed: [
       {
         default: null,
         type: mongoose.Schema.Types.ObjectId,
-        //ref: elements,
+        ref: "elements",
       },
     ],
     dropped: [
       {
         default: null,
         type: mongoose.Schema.Types.ObjectId,
-        //ref: elements,
+        ref: "elements",
       },
     ],
     pending: [
       {
         default: null,
         type: mongoose.Schema.Types.ObjectId,
-        //ref: elements,
+        ref: "elements",
       },
     ],
     idUser: {
