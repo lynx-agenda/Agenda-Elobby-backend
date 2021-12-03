@@ -48,7 +48,7 @@ async function createElement(req, res) {
       idApi,
       type
     });
-    element = await newElement.save();
+    element = await element.save();
     return res.json({ success: true, element });
   } else {
     return res.json({ success: true, element });
