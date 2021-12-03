@@ -38,13 +38,13 @@ function getElement(req, res) {
 
 async function createElement(req, res) {
   const { idApi, type } = req.body;
-  const element = await ELEMENTmodel.findOne({
+  let element = await ELEMENTmodel.findOne({
     idApi: idApi,
     type: type,
   });
 
   if (!element) {
-    const element = new ELEMENTmodel({
+    let element = new ELEMENTmodel({
       idApi,
       type
     });
