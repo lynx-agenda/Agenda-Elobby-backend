@@ -44,11 +44,11 @@ async function createElement(req, res) {
   });
 
   if (!element) {
-    element = new ELEMENTmodel({
+    let newElement = new ELEMENTmodel({
       idApi,
       type
     });
-    element = await element.save();
+    element = await newElement.save();
     return res.json({ success: true, element });
   } else {
     return res.json({ success: true, element });
