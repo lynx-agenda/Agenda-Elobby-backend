@@ -10,13 +10,17 @@ const ELEMENTmodel = require("../models/element.model");
 
 module.exports = {
   getAllReviews,
-  getOneReview,
+  getUserReviews,
   createReview,
   // modifyReview,
 };
 
 function getAllReviews(req, res) {
   return REVIEWSmodel.find()
+    .populate("idElement", {
+      idApi: 1,
+      type: 1,
+    })
     .then((results) => {
       return res.json(results);
     })
@@ -25,20 +29,25 @@ function getAllReviews(req, res) {
     });
 }
 
-function getOneReview(req, res) {
-  const { id } = req.params;
-  REVIEWSmodel.findById(id)
-    .populate("idUser", {
-      name: 1,
-      email: 1,
-      usename: 1,
-    })
-    .then((review) => {
-      return res.json(review);
-    })
-    .catch((e) => {
-      return res.status(500).json(e);
-    });
+function getUserReviews(req, res) {
+  return (
+    REVIEWSmodel.find({ idUser: req.params.id })
+      // .populate("idUser", {
+      //   name: 1,
+      //   email: 1,
+      //   usename: 1,
+      // })
+      .populate("idElement", {
+        idApi: 1,
+        type: 1,
+      })
+      .then((review) => {
+        return res.json(review);
+      })
+      .catch((e) => {
+        return res.status(500).json(e);
+      })
+  );
 }
 
 async function createReview(req, res) {
