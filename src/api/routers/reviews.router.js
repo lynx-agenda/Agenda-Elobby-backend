@@ -5,7 +5,7 @@ const {
   checkAuthUserValidity,
 } = require("../../middlewares/auth.middleware");
 
-router.get("", isAdmin, controller.getAllReviews);
+router.get("", controller.getAllReviews);
 router.post("/:id", checkAuthUserValidity, controller.createReview);
 router.get("/:id", checkAuthUserValidity, controller.getOneReview);
 // router.patch("/:id", checkAuthUserValidity, controller.modifyReview);
