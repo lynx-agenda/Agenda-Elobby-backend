@@ -21,6 +21,9 @@ function getAllReviews(req, res) {
       idApi: 1,
       type: 1,
     })
+    .populate("idUser", {
+      username: 1,
+    })
     .then((results) => {
       return res.json(results);
     })
@@ -30,24 +33,20 @@ function getAllReviews(req, res) {
 }
 
 function getUserReviews(req, res) {
-  return (
-    REVIEWSmodel.find({ idUser: req.params.id })
-      // .populate("idUser", {
-      //   name: 1,
-      //   email: 1,
-      //   usename: 1,
-      // })
-      .populate("idElement", {
-        idApi: 1,
-        type: 1,
-      })
-      .then((review) => {
-        return res.json(review);
-      })
-      .catch((e) => {
-        return res.status(500).json(e);
-      })
-  );
+  return REVIEWSmodel.find({ idUser: req.params.id })
+    .populate("idUser", {
+      username: 1,
+    })
+    .populate("idElement", {
+      idApi: 1,
+      type: 1,
+    })
+    .then((review) => {
+      return res.json(review);
+    })
+    .catch((e) => {
+      return res.status(500).json(e);
+    });
 }
 
 async function createReview(req, res) {
