@@ -28,8 +28,7 @@ function getAllDiaries(req, res) {
 }
 
 function getDiary(req, res) {
-  return DIARYmodel.findOne({ id: req.params.id })
-  .populate('watching', 'dropped', 'completed' ,'pending')
+  return DIARYmodel.findOne({ _id: req.params.id })
     .then((results) => {
       return res.json(results);
     })
