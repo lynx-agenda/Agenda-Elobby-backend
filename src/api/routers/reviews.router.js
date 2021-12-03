@@ -7,7 +7,7 @@ const {
 
 router.get("", controller.getAllReviews);
 router.post("/:id", checkAuthUserValidity, controller.createReview);
-router.get("/:id", checkAuthUserValidity, controller.getOneReview);
+router.get("/:id", checkAuthUserValidity, controller.getUserReviews);
 // router.patch("/:id", checkAuthUserValidity, controller.modifyReview);
 
 module.exports = router;
