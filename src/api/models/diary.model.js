@@ -8,30 +8,26 @@ const diarySchema = new mongoose.Schema(
   {
     watching: [
       {
-        default: null,
         type: mongoose.Schema.Types.ObjectId,
-        ref: "elements",
+        ref: "element",
       },
     ],
     completed: [
       {
-        default: null,
         type: mongoose.Schema.Types.ObjectId,
-        ref: "elements",
+        ref: "element",
       },
     ],
     dropped: [
       {
-        default: null,
         type: mongoose.Schema.Types.ObjectId,
-        ref: "elements",
+        ref: "element",
       },
     ],
     pending: [
       {
-        default: null,
         type: mongoose.Schema.Types.ObjectId,
-        ref: "elements",
+        ref: "element",
       },
     ],
     idUser: {
