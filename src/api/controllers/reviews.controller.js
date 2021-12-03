@@ -1,5 +1,6 @@
 const REVIEWSmodel = require("../models/reviews.model");
 const USERmodel = require("../models/users.model");
+const ELEMENTmodel = require("../models/element.model");
 /**
  *     GET :    /users            getAllReviews
  *     GET :    /users/:email     getOneReview
@@ -41,11 +42,12 @@ function getOneReview(req, res) {
 }
 
 async function createReview(req, res) {
-  const { text, note } = req.body;
+  const { text, note, idElement } = req.body;
   const user = await USERmodel.findById(req.params.id);
   const newReview = new REVIEWSmodel({
     text,
     note,
+    idElement,
     idUser: req.params.id,
   });
 

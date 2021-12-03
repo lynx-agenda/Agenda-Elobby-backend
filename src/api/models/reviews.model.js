@@ -15,9 +15,8 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
     },
     idElement: {
-      default: null,
       type: mongoose.Schema.Types.ObjectId,
-      ref: "elements",
+      ref: "element",
     },
     created: {
       type: Date,
