@@ -28,8 +28,9 @@ function getAllDiaries(req, res) {
 }
 
 function getDiary(req, res) {
-  return DIARYmodel.findOne({ _id: req.params.id })
+  return DIARYmodel.findOne({ _id: req.params.idDiary })
     .then((results) => {
+      console.log(results);
       return res.json(results);
     })
     .catch((err) => {
