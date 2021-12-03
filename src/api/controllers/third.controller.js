@@ -112,6 +112,7 @@ function getGames(req, res) {
   const search_precise = req.body?.search_precise || "true";
   const parent_platforms = req.body?.parent_platforms || "1,2,3,7";
   const exclude_additions = req.body?.exclude_additions || "true";
+  const page = req.body?.page || 1;
 
   const baseURL = "https://api.rawg.io/api/games";
   let requestURL = "";
@@ -127,6 +128,7 @@ function getGames(req, res) {
         search_precise: search_precise,
         parent_platforms: parent_platforms,
         exclude_additions: exclude_additions,
+        page: page
       },
     })
     .then((response) => {
