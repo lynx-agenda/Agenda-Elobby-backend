@@ -6,7 +6,7 @@ If you want to build this site locally, run the following:
 
 1. Clone this repository:
 
-`` 
+```
 git clone https://github.com/lynx-agenda/Agenda-Elobby-backend.git
 ```
 
