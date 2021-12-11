@@ -32,68 +32,51 @@ async function getBooks(req, res) {
 
 	const request = JSON.stringify(req.body);
 
-  try {
+	try {
+		const books = await client.get(request);
 
-    const books = await client.get(request);
-  
-    if (books) {
-      //send the response from cache
-      console.log("send the response from cache", JSON.parse(books));
-  
-      res.status(200).json(JSON.parse(books));
-    } else {
-      //fetch the data
-      console.log("//fetch the data.");
-  
-      const books = await axios
-        .get(baseUrl, {
-          params: {
-            q: q,
-            printType: printType,
-            maxResults: maxResults,
-            // key: config.GOOGLE_BOOKS_API_KEY,
-            orderBy: orderBy,
-            langRestrict: langRestrict,
-            startIndex: startIndex,
-            fields: fields,
-          },
-        })
-        .catch((err) => {
-          return res.status(400).json("No se ha podido realizar la consulta: " + err);
-        });
-  
-      //set the data on cache
-      console.log("//set the data on cache");
-  
-      client.set(request, JSON.stringify(books.data));
-  
-      //send the response
-      console.log("//send the response");
-      return res.status(200).json(books.data);
-    }
-  } catch(err){
-    console.log(err);
-  }
+		if (books) {
+			//send the response from cache
+			res.status(200).json({ success: true, ...JSON.parse(books), meta_data: "from_cache" });
+		} else {
+			//fetch the data
+			//console.log("fetch the data.");
 
-	// return axios
-	// 	.get(baseUrl, {
-	// 		params: {
-	// 			q: q,
-	// 			printType: printType,
-	// 			maxResults: maxResults,
-	// 			// key: config.GOOGLE_BOOKS_API_KEY,
-	// 			orderBy: orderBy,
-	// 			langRestrict: langRestrict,
-	// 			startIndex: startIndex,
-	// 			fields: fields,
-	// 		},
-	// 	})
-	// 	.then((response) => {
-	// 		return res.status(200).json(response.data);
-	// 	})
-	// 	.catch((err) => {
-	// 		return res.status(400).json("No se ha podido realizar la consulta: " + err);
-	// 	});
+			const books = await axios
+				.get(baseUrl, {
+					params: {
+						q: q,
+						printType: printType,
+						maxResults: maxResults,
+						// key: config.GOOGLE_BOOKS_API_KEY,
+						orderBy: orderBy,
+						langRestrict: langRestrict,
+						startIndex: startIndex,
+						fields: fields,
+					},
+				})
+				.catch((err) => {
+					return res
+						.status(400)
+						.json({ success: false, msg: "No se ha podido realizar la consulta: " + err });
+				});
+
+			//set the data on cache
+			// console.log("//set the data on cache");
+			client.set(request, JSON.stringify(books.data));
+			client.expire(request, 86400);
+
+			//send the response
+			// console.log("//send the response");
+			return res.status(200).json({
+				success: true,
+				...books.data,
+				meta_data: "from server",
+			});
+		}
+	} catch (err) {
+		console.log(err);
+	}
 }
 
 /**
@@ -101,7 +84,7 @@ async function getBooks(req, res) {
  * @param {query params para modificar la axios request}
  * @returns Respuesta axios con la petición a la API
  */
-function getMoviesAndTV(req, res) {
+async function getMoviesAndTV(req, res) {
 	const query = req.body?.query || "";
 	const idResource = req.body?.idResource || "";
 	const page = req.body?.page || 1;
@@ -113,41 +96,64 @@ function getMoviesAndTV(req, res) {
 	let requestURL = "";
 	let params = {};
 
-	if (action === "discover") {
-		requestURL = baseURL + `/${action}/${resourceType}`;
-		params = {
-			page: page,
-			api_key: config.TMDB_API_KEY,
-		};
-	} else if (action === "search") {
-		requestURL = baseURL + `/${action}/${resourceType}`;
-		params = {
-			query: query,
-			page: page,
-			api_key: config.TMDB_API_KEY,
-		};
-	} else {
-		if (season !== "") requestURL = baseURL + `/${resourceType}/${idResource}/season/${season}`;
-		else requestURL = baseURL + `/${resourceType}/${idResource}`;
-		params = {
-			api_key: config.TMDB_API_KEY,
-		};
-	}
+	const request = JSON.stringify(req.body);
 
-	return axios
-		.get(requestURL, {
-			params: params,
-		})
-		.then((response) => {
-			return res.status(200).json(response.data);
-		})
-		.catch((err) => {
-			console.log(err);
-			return res.status(400).json("No se ha podido realizar la consulta: " + err);
-		});
+	try {
+		const movies_tvShows = await client.get(request);
+
+		if (movies_tvShows) {
+			//send the response from cache
+			// console.log("send the response from cache");
+			res.status(200).json({ success: true, ...JSON.parse(movies_tvShows), meta_data: "from_cache" });
+		} else {
+			if (action === "discover") {
+				requestURL = baseURL + `/${action}/${resourceType}`;
+				params = {
+					page: page,
+					api_key: config.TMDB_API_KEY,
+				};
+			} else if (action === "search") {
+				requestURL = baseURL + `/${action}/${resourceType}`;
+				params = {
+					query: query,
+					page: page,
+					api_key: config.TMDB_API_KEY,
+				};
+			} else {
+				if (season !== "") requestURL = baseURL + `/${resourceType}/${idResource}/season/${season}`;
+				else requestURL = baseURL + `/${resourceType}/${idResource}`;
+				params = {
+					api_key: config.TMDB_API_KEY,
+				};
+			}
+			console.log("fetch the data.");
+
+			const movies_tvShows = await axios
+				.get(requestURL, {
+					params: params,
+				})
+				.catch((err) => {
+					console.log(err);
+					return res
+						.status(400)
+						.json({ success: false, msg: "No se ha podido realizar la consulta: " + err });
+				});
+
+			//set the data on cache
+			// console.log("//set the data on cache");
+			client.set(request, JSON.stringify(movies_tvShows.data));
+			client.expire(request, 86400);
+
+			return res.status(200).json({
+				success: true,
+				...movies_tvShows.data,
+				meta_data: "from server",
+			});
+		}
+	} catch (error) {}
 }
 
-function getGames(req, res) {
+async function getGames(req, res) {
 	const search = req.body?.search || "";
 	const idResource = req.body?.idResource || "";
 	const search_precise = req.body?.search_precise || "true";
@@ -161,21 +167,47 @@ function getGames(req, res) {
 	if (idResource !== "") requestURL = baseURL + `/${idResource}`;
 	else requestURL = baseURL;
 
-	return axios
-		.get(requestURL, {
-			params: {
-				search: search,
-				key: config.RAWG_IO_API_KEY,
-				search_precise: search_precise,
-				parent_platforms: parent_platforms,
-				exclude_additions: exclude_additions,
-				page: page,
-			},
-		})
-		.then((response) => {
-			return res.status(200).json(response.data);
-		})
-		.catch((err) => {
-			return res.status(400).json("No se ha podido realizar la consulta: " + err);
-		});
+	const request = JSON.stringify(req.body);
+
+	try {
+		const games = await client.get(request);
+
+		if (games) {
+			//send the response from cache
+			res.status(200).json({ success: true, ...JSON.parse(games), meta_data: "from_cache" });
+		} else {
+			//fetch the data
+			// console.log("fetch the data.");
+
+			const games = await axios
+				.get(requestURL, {
+					params: {
+						search: search,
+						key: config.RAWG_IO_API_KEY,
+						search_precise: search_precise,
+						parent_platforms: parent_platforms,
+						exclude_additions: exclude_additions,
+						page: page,
+					},
+				})
+				.catch((err) => {
+					return res.status(400).json("No se ha podido realizar la consulta: " + err);
+				});
+
+			//set the data on cache
+			// console.log("//set the data on cache");
+			client.set(request, JSON.stringify(games.data));
+			client.expire(request, 86400);
+
+			//send the response
+			// console.log("//send the response");
+			return res.status(200).json({
+				success: true,
+				...games.data,
+				meta_data: "from server",
+			});
+		}
+	} catch (error) {
+		return res.status(400).json("No se ha podido realizar la consulta: " + err);
+	}
 }
