@@ -13,5 +13,7 @@ module.exports = {
 
   GOOGLE_BOOKS_API_KEY: process.env.GOOGLE_BOOKS_API_KEY || "Teemo",
   TMDB_API_KEY: process.env.TMDB_API_KEY || "Volibear",
-  RAWG_IO_API_KEY: process.env.RAWG_IO_API_KEY || "Ezreal"
+  RAWG_IO_API_KEY: process.env.RAWG_IO_API_KEY || "Ezreal",
+
+  REDIS_URL: process.env.REDIS_URL || 'localhost',
 };
