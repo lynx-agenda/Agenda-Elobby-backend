@@ -46,7 +46,6 @@ function getDiary(req, res) {
       type: 1,
     })
     .then((results) => {
-      console.log(results);
       return res.json(results);
     })
     .catch((err) => {
@@ -74,7 +73,7 @@ function removeDiary(req, res) {
     });
 }
 
-function modifyDiary(req, res) {
+async function modifyDiary(req, res) {
   if (
     req.body.status !== "watching" &&
     req.body.status !== "completed" &&
@@ -84,35 +83,50 @@ function modifyDiary(req, res) {
     return res.status(400).json({ msg: "el status no es válido" });
   }
 
-  let updateDiary = {};
+  const diary = await DIARYmodel.findById(req.params.idDiary)
+    .populate("watching", {
+      _id: 1,
+    })
+    .populate("completed", {
+      _id: 1,
+    })
+    .populate("dropped", {
+      _id: 1,
+    })
+    .populate("pending", {
+      _id: 1,
+    });
+
+  diary.watching = diary.watching.filter(
+    (element) => element.id != req.body.idElement
+  );
+
+  diary.completed = diary.completed.filter(
+    (element) => element.id != req.body.idElement
+  );
+
+  diary.dropped = diary.dropped.filter(
+    (element) => element.id != req.body.idElement
+  );
+
+  diary.pending = diary.pending.filter(
+    (element) => element.id != req.body.idElement
+  );
+
   if (req.body.status === "watching") {
-    updateDiary = {
-      watching: req.body.idElement,
-    };
+    diary.watching.push(req.body.idElement);
   }
   if (req.body.status === "completed") {
-    updateDiary = {
-      completed: req.body.idElement,
-    };
+    diary.completed.push(req.body.idElement);
   }
   if (req.body.status === "dropped") {
-    updateDiary = {
-      dropped: req.body.idElement,
-    };
+    diary.dropped.push(req.body.idElement);
   }
   if (req.body.status === "pending") {
-    updateDiary = {
-      pending: req.body.idElement,
-    };
+    diary.pending.push(req.body.idElement);
   }
-
-  return DIARYmodel.findByIdAndUpdate(
-    req.params.idDiary,
-    {
-      $push: updateDiary,
-    },
-    { new: true }
-  )
+  diary
+    .save()
     .then((results) => {
       return res.json(results);
     })

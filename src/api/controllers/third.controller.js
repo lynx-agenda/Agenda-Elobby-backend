@@ -99,14 +99,13 @@ function getMoviesAndTV(req, res) {
       return res.status(200).json(response.data);
     })
     .catch((err) => {
-      console.log(err);
       return res
         .status(400)
         .json("No se ha podido realizar la consulta: " + err);
     });
 }
 
-function getGames(req, res) {
+async function getGames(req, res) {
   const search = req.body?.search || "";
   const idResource = req.body?.idResource || "";
   const search_precise = req.body?.search_precise || "true";
@@ -128,7 +127,7 @@ function getGames(req, res) {
         search_precise: search_precise,
         parent_platforms: parent_platforms,
         exclude_additions: exclude_additions,
-        page: page
+        page: page,
       },
     })
     .then((response) => {
