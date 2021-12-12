@@ -49,6 +49,10 @@ const userSchema = new mongoose.Schema(
         ref: "review",
       },
     ],
+    tierlist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "tierlist",
+    },
     role: {
       type: String,
       enum: ["admin", "user"],

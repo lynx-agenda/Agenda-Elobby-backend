@@ -38,11 +38,13 @@ function checkAuthUserValidity(req, res, next) {
   const userRole = req.locals.dataStored.userRole;
   const userId = req.locals.dataStored.userId;
 
-  if (userRole === "user" && userId != req.params.id) {
+  if (userRole === "user" && !userId) {
     return res.status(401).send({
       msg: "El usuario carece de credenciales válidas para la petición realizada",
     });
   }
+
+  req.userId = userId;
 
   next();
 }
