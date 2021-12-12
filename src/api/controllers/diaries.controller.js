@@ -78,7 +78,8 @@ async function modifyDiary(req, res) {
     req.body.status !== "watching" &&
     req.body.status !== "completed" &&
     req.body.status !== "dropped" &&
-    req.body.status !== "pending"
+    req.body.status !== "pending" && 
+    req.body.status !== "delete"
   ) {
     return res.status(400).json({ msg: "el status no es válido" });
   }
