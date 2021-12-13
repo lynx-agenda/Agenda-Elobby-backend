@@ -1,22 +1,25 @@
 # Agenda-Elobby (backend) 
 
+Implementación del backend para el proyecto [Agenda Elobby](https://github.com/lynx-agenda/Agenda-Elobby).
+
 ## Project set up
 
-If you want to build this site locally, run the following:
+Si quieres levantar el servidor en local:
 
-1. Clone this repository:
+1. Clona el repositorio:
 
 ```
 git clone https://github.com/lynx-agenda/Agenda-Elobby-backend.git
 ```
 
-2. Move into the Agenda-Elobby-backend folder and install the NPM dependencies:
+2. Accede a la carpeta Agenda-Elobby-backend y continuación instala las dependencias: 
 
 ```
 cd Agenda-Elobby-backend
 npm install
 ```
-3. Set .env file
+
+3. Establece el fichero .env con las variables de entorno
 
 ```
 API_VERSION=v1
@@ -38,13 +41,17 @@ RAWG_IO_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 REDIS_URL=redis://127.0.0.1:6379
 ```
 
-4. Boot up redis server
+4. Levanta el servidor de redis
 
 ```
-// pendiente
+// Install redis server
+sudo apt-get install redis
+
+// start redis server
+redis-server
 ```
 
-5. Boot up the application in dev mode:
+5. Levanta el backend:
 
 ```
 npm start
@@ -53,6 +60,24 @@ npm start
 Close the local server with CTRL + c.
 
 To restart the local server, run npm start from within the Agenda-Elobby-backend folder.
+
+## Deployment
+
+El backend se encuentra desplegado en Heroku y configurado para desplegarse automáticamente ante cada push que se realice en la rama `main` del proyecto. 
+
+Guía para desplegar una aplicación de Node.js en Heroku: [enlace](https://devcenter.heroku.com/articles/deploying-nodejs)
+
+## Technology Stack
+
+El proyecto se implementó utilizando [Node v14.x] y utilizando las siguientes teconologías: 
+
+* [express](https://expressjs.com/es/) 
+* [axios](https://github.com/axios/axios)
+* [bcrypt](https://www.npmjs.com/package/bcrypt)
+* [mongoose](https://mongoosejs.com/)
+* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+* [redis](https://redis.com/)
+* [npm](https://www.npmjs.com/)
 
 ## Members
 
@@ -63,4 +88,4 @@ To restart the local server, run npm start from within the Agenda-Elobby-backend
 
 ## License
 
-All software code is copyright (c) Protocol Labs, Inc. under the MIT license. Other written documentation and content is copyright (c) Protocol Labs, Inc. under the [Creative Commons Attribution-Share-Alike License](https://creativecommons.org/licenses/by/4.0/).
+[MIT](https://choosealicense.com/licenses/mit/)
